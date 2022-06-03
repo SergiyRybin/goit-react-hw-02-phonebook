@@ -33,4 +33,8 @@ button {
   outline: none;
   border: 1px solid lightgray;
   border-radius: 2px;
+  
+}
+.delete{
+  margin-left: 10px;
 }
