@@ -1,11 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const ContactList = ({filterBook}) => (
+
+const ContactList = ({filterBook, onRemove}) => (
   <ul>
     {filterBook.map((contact, index) => (
       <li key={index}>
         {contact.name}: {contact.number}
-        <button type='submite' className='delete'>Delete</button>
+        <button type='submite' className='delete' onClick={onRemove}>Delete</button>
       </li>
       
     ))}
@@ -13,3 +15,9 @@ const ContactList = ({filterBook}) => (
 );
 
 export default ContactList;
+
+ContactList.propTypes ={
+  onRemove: PropTypes.func.isRequired,
+  filterBook: PropTypes.array.isRequired
+  
+}

@@ -5,11 +5,7 @@ import ContactList from '../ContactList/ContactList';
 import Filter from '../Filter/Filter';
 
 class MainForm extends Component {
-  // state = {
-  //   contacts: [],
-  //   name: '',
-  //   number: '',
-  // };
+
   state = {
     contacts: [
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -30,18 +26,27 @@ class MainForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const inputValue = e.currentTarget.name.value
+    const inputValue = e.currentTarget.name.value;
     this.setState(({ contacts, name, id, number }) => {
-      if( contacts.find(el=> el.name===inputValue)){
-       return  alert(`${name} is already in contacts`)
+      if (contacts.find(el => el.name === inputValue)) {
+        return alert(`${name} is already in contacts`);
       }
-      
+
       return {
         contacts: [...contacts, { name, id, number }],
       };
     });
 
     e.currentTarget.reset();
+  };
+
+  handleRemove = e => {
+    const delValue = e.currentTarget.parentNode.firstChild.data;
+    const { contacts } = this.state;
+
+    this.setState({
+      contacts: contacts.filter(el => el.name !== delValue),
+    });
   };
 
   render() {
@@ -56,11 +61,12 @@ class MainForm extends Component {
         <ContactForm
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
+          onRemove={this.handleRemove}
         />
 
         <h1>Contacts</h1>
         <Filter onChange={this.handleChange} />
-        <ContactList filterBook={filterBook} />
+        <ContactList filterBook={filterBook} onRemove={this.handleRemove} />
       </div>
     );
   }

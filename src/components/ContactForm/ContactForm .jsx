@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from "prop-types"
+
 
 const ContactForm = ({ onSubmit, onChange }) => (
   <form onSubmit={onSubmit}>
@@ -28,4 +30,11 @@ const ContactForm = ({ onSubmit, onChange }) => (
   </form>
 );
 
+
 export default ContactForm;
+
+ContactForm.propTypes ={
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+
+}
