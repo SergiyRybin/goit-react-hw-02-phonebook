@@ -4,22 +4,25 @@ import { nanoid } from 'nanoid';
 class App extends Component {
   state = {
     contacts: [],
-    name: { name: '', id: '' },
+    name: '',
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    const name = e.currentTarget.name.value;
+    const { name, value } = e.currentTarget.name;
+    const id = nanoid(5);
+
     this.setState(prev => {
       return {
-        name: name,
-        id: this.loginInputId,
-        contacts: [...prev.contacts, name],
+        [name]: { value, id },
+        contacts: [...prev.contacts, {value, id}],
       };
     });
+
     e.currentTarget.reset();
+   
   };
-  loginInputId = nanoid(5);
+
   render() {
     const { contacts } = this.state;
     return (
@@ -41,8 +44,8 @@ class App extends Component {
 
         <h1>Contacts</h1>
         <ul>
-          {contacts.map((contact,index) => (
-            <li key={index}>{contact}</li>
+          {contacts.map((contact, index) => (
+            <li key={index}>{contact.value}</li>
           ))}
         </ul>
       </div>
