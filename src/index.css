@@ -28,3 +28,9 @@ input {
   width: 150px;
   margin: 10px 0;
 }
+button {
+  background-color: white;
+  outline: none;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+}
