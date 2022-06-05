@@ -1,11 +1,9 @@
 import { Component } from 'react';
-import { nanoid } from 'nanoid';
 import ContactForm from '../ContactForm/ContactForm ';
 import ContactList from '../ContactList/ContactList';
 import Filter from '../Filter/Filter';
 
 class MainForm extends Component {
-
   state = {
     contacts: [
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -14,36 +12,31 @@ class MainForm extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
-  handleChange = e => {
-    const { name, value } = e.currentTarget;
-    const id = nanoid(5);
-    this.setState({ [name]: value, id });
-  };
+  fromStateData = data => {
+    const { name, id, number } = data;
+    this.setState(({ contacts }) => {
 
-  handleSubmit = e => {
-    e.preventDefault();
-    const inputValue = e.currentTarget.name.value;
-    this.setState(({ contacts, name, id, number }) => {
-      if (contacts.find(el => el.name === inputValue)) {
-        return alert(`${name} is already in contacts`);
+      if (contacts.find(el => el.name.toLowerCase() === name.toLowerCase())){
+        return alert(`${name} is already in contacts`)
+       
       }
-
-      return {
-        contacts: [...contacts, { name, id, number }],
-      };
+        return {
+          contacts: [...contacts, { name, id, number }],
+        };
     });
-
-    e.currentTarget.reset();
   };
 
-  handleRemove = e => {
+  handleFilter = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({ [name]: value });
+  };
+
+  contactRemove = e => {
+    console.log(e);
     const delValue = e.currentTarget.parentNode.firstChild.data;
     const { contacts } = this.state;
-
     this.setState({
       contacts: contacts.filter(el => el.name !== delValue),
     });
@@ -54,19 +47,14 @@ class MainForm extends Component {
     const filterBook = contacts.filter(({ name }) =>
       name.toLowerCase().startsWith(filter.toLowerCase())
     );
-
     return (
       <div className="phoneBook">
         <h1>Phonebook</h1>
-        <ContactForm
-          onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-          onRemove={this.handleRemove}
-        />
+        <ContactForm onSub={this.fromStateData} />
 
         <h1>Contacts</h1>
-        <Filter onChange={this.handleChange} />
-        <ContactList filterBook={filterBook} onRemove={this.handleRemove} />
+        <Filter onFilter={this.handleFilter} />
+        <ContactList filterBook={filterBook} onRemove={this.contactRemove} />
       </div>
     );
   }
