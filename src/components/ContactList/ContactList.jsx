@@ -10,9 +10,11 @@ const ContactList = ({ filterBook, onRemove }) => (
   </ul>
 );
 
-export default ContactList;
-
 ContactList.propTypes = {
   onRemove: PropTypes.func.isRequired,
   filterBook: PropTypes.array.isRequired,
 };
+
+export default ContactList;
+
+
