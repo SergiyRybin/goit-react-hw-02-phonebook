@@ -17,14 +17,12 @@ class MainForm extends Component {
   fromStateData = data => {
     const { name, id, number } = data;
     this.setState(({ contacts }) => {
-
-      if (contacts.find(el => el.name.toLowerCase() === name.toLowerCase())){
-        return alert(`${name} is already in contacts`)
-       
+      if (contacts.find(el => el.name.toLowerCase() === name.toLowerCase())) {
+        return alert(`${name} is already in contacts`);
       }
-        return {
-          contacts: [...contacts, { name, id, number }],
-        };
+      return {
+        contacts: [...contacts, { name, id, number }],
+      };
     });
   };
 
@@ -34,7 +32,6 @@ class MainForm extends Component {
   };
 
   contactRemove = e => {
-    console.log(e);
     const delValue = e.currentTarget.parentNode.firstChild.data;
     const { contacts } = this.state;
     this.setState({
